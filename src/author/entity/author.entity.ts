@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { MangaEntity } from "src/manga/entity/manga.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({name: 'authors'})
 export class AuthorEntity {
@@ -27,6 +28,9 @@ export class AuthorEntity {
         nullable: true
     })
     image: string;
+
+    @OneToMany(() => MangaEntity, (manga) => manga.author)
+    manga: MangaEntity[];
 
     @CreateDateColumn({
         name: 'created_at'

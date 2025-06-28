@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { getTypeOrmConfig } from './config/database.config';
 import { AuthorModule } from './author/author.module';
 import { PublisherModule } from './publisher/publisher.module';
+import { MangaModule } from './manga/manga.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { PublisherModule } from './publisher/publisher.module';
       inject: [ConfigService]
     }),
     AuthorModule,
-    PublisherModule
+    PublisherModule,
+    MangaModule
   ],
   controllers: [AppController],
   providers: [AppService],
