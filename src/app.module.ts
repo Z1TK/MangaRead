@@ -7,6 +7,9 @@ import { getTypeOrmConfig } from './config/database.config';
 import { AuthorModule } from './author/author.module';
 import { PublisherModule } from './publisher/publisher.module';
 import { MangaModule } from './manga/manga.module';
+import { TagModule } from './tag/tag.module';
+import { GenreModule } from './genre/genre.module';
+
 
 @Module({
   imports: [
@@ -20,7 +23,9 @@ import { MangaModule } from './manga/manga.module';
     }),
     AuthorModule,
     PublisherModule,
-    MangaModule
+    MangaModule,
+    TagModule,
+    GenreModule
   ],
   controllers: [AppController],
   providers: [AppService],

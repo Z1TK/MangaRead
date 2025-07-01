@@ -1,15 +1,31 @@
 import { MangaEntity } from "src/manga/entity/manga.entity";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import slugify from "slugify";
 
 @Entity({name: 'authors'})
 export class AuthorEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({
-        unique: true,
-    })
+    @Column()
     name: string;
+
+    @Column({
+        unique: true
+    })
+    slug: string;
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    generateSlug() {
+        if (this.name) {
+            this.slug = slugify(this.name, {
+                lower: true, 
+                strict: true,
+                trim: true
+            });
+        }
+    }
     
     @Column({
         unique: true,
