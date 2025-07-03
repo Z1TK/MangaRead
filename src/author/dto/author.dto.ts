@@ -17,5 +17,4 @@ export class AuthorDto {
     @IsUrl()
     @IsOptional()
     image: string;
-
 }

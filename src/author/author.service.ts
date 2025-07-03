@@ -18,7 +18,10 @@ export class AuthorService {
 
     async findById(id: string): Promise<AuthorEntity> {
         const author = await this.authorRepository.findOne({
-            where: { id }
+            where: { id },
+            relations: {
+                manga: true
+            }
         });
 
         if (!author) {
