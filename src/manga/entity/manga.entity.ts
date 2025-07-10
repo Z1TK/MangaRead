@@ -27,7 +27,7 @@ export class MangaEntity {
     cover: string;
 
     @Column()
-    name: string;
+    title: string;
 
     @Column({
         unique: true
@@ -37,8 +37,8 @@ export class MangaEntity {
     @BeforeInsert()
     @BeforeUpdate()
     generateSlug() {
-        if (this.name) {
-            this.slug = slugify(this.name, {
+        if (this.title) {
+            this.slug = slugify(this.title, {
                 lower: true, 
                 strict: true,
                 trim: true
@@ -52,10 +52,11 @@ export class MangaEntity {
     description: string;
 
     @Column({
+        type: 'text',
         unique: true,
         array: true
     })
-    alternative_name: string[];
+    alternative_title: string[];
 
     @ManyToOne(() => AuthorEntity, (author) => author.manga)
     @JoinColumn({name: 'author_id'})

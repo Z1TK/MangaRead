@@ -17,7 +17,10 @@ async findall(): Promise<PublisherEntity[]> {
 
     async findById(id: string): Promise<PublisherEntity> {
         const author = await this.publisherRepository.findOne({
-            where: { id }
+            where: { id },
+            relations: {
+                manga: true
+            }
         });
 
         if (!author) {

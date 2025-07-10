@@ -45,7 +45,9 @@ export class PublisherEntity {
     })
     image: string;
 
-    @OneToMany(() => MangaEntity, (manga) => manga.publisher)
+    @OneToMany(() => MangaEntity, (manga) => manga.publisher, {
+        cascade: true
+    })
     manga: MangaEntity;
 
     @CreateDateColumn({

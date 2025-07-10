@@ -7,25 +7,10 @@ export class GenreEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
-    name: string;
-
     @Column({
         unique: true
     })
-    slug: string;
-    
-    @BeforeInsert()
-    @BeforeUpdate()
-    generateSlug() {
-        if (this.name) {
-            this.slug = slugify(this.name, {
-                lower: true, 
-                strict: true,
-                trim: true
-            });
-        }
-    }
+    name: string;
 
     @ManyToMany(() => MangaEntity, (manga) => manga.genres)
     manga: MangaEntity[];
