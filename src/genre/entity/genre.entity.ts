@@ -1,11 +1,11 @@
 import { MangaEntity } from "src/manga/entity/manga.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import slugify from "slugify";
+import { Exclude } from "class-transformer"
 
 @Entity({name: 'genres'})
 export class GenreEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column({
         unique: true
@@ -13,5 +13,6 @@ export class GenreEntity {
     name: string;
 
     @ManyToMany(() => MangaEntity, (manga) => manga.genres)
+    @Exclude()
     manga: MangaEntity[];
 }

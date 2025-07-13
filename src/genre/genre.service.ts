@@ -1,6 +1,6 @@
 import { Delete, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { GenreEntity } from './entity/genre.entity';
 import { GenreDto } from './dto/genre.dto';
 
@@ -13,5 +13,11 @@ export class GenreService {
 
     async fidnall(): Promise<GenreEntity[]> {
         return await this.genreRepository.find()
+    }
+
+    async findByIds(ids: number[]): Promise<GenreEntity[]> {
+        return await this.genreRepository.findBy({
+            id: In(ids)
+        })
     }
 }

@@ -82,7 +82,7 @@ export class MangaEntity {
         type: 'int',
         unsigned: true
     })
-    release_yaer: number;
+    release_year: number;
 
     @Column({
         type: 'enum',

@@ -1,10 +1,11 @@
 import { MangaEntity } from "src/manga/entity/manga.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import slugify from "slugify";
+import { Exclude } from "class-transformer";
 
 @Entity({name: 'tags'})
 export class TagEntity {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn()
     id: string;
 
     @Column({
@@ -13,5 +14,6 @@ export class TagEntity {
     name: string;
 
     @ManyToMany(() => MangaEntity, (manga) => manga.tags)
+    @Exclude()
     manga: MangaEntity[];
 }
