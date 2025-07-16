@@ -9,6 +9,7 @@ import { PublisherModule } from './publisher/publisher.module';
 import { MangaModule } from './manga/manga.module';
 import { TagModule } from './tag/tag.module';
 import { GenreModule } from './genre/genre.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -25,7 +26,8 @@ import { GenreModule } from './genre/genre.module';
     PublisherModule,
     MangaModule,
     TagModule,
-    GenreModule
+    GenreModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

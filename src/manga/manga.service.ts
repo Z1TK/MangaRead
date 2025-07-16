@@ -83,4 +83,22 @@ export class MangaService {
             
         return await this.mangaRepository.save(manga);
     }
+
+    async update(id: string, dto: Partial<MangaDto>): Promise<Boolean> {
+        const manga = await this.findById(id);
+
+        Object.assign(manga, dto);
+
+        await this.mangaRepository.save(manga);
+
+        return true;
+    }
+
+    async delete(id: string): Promise<String> {
+        const manga = await this.findById(id);
+
+        await this.mangaRepository.remove(manga);
+
+        return 'The object was deleting'
+    }
 }

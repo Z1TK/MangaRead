@@ -13,6 +13,5 @@ export class GenreEntity {
     name: string;
 
     @ManyToMany(() => MangaEntity, (manga) => manga.genres)
-    @Exclude()
     manga: MangaEntity[];
 }

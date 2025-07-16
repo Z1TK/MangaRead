@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { MangaService } from './manga.service';
 import { MangaDto } from './dto/manga.dto';
 
@@ -12,12 +12,22 @@ export class MangaController {
   }
 
   @Get(":id")
-  async findById(id: string) {
+  async findById(@Param('id') id: string) {
     return await this.mangaService.findById(id)
   }
 
   @Post()
   async create(@Body() dto: MangaDto) {
     return await this.mangaService.create(dto);
+  }
+
+  @Patch(":id")
+  async update(@Param('id') id:string, @Body() dto:MangaDto) {
+    return await this.mangaService.update(id, dto);
+  }
+
+  @Delete(":id")
+  async remove(@Param('id') id:string) {
+    return await this.mangaService.delete(id);
   }
 }

@@ -14,6 +14,5 @@ export class TagEntity {
     name: string;
 
     @ManyToMany(() => MangaEntity, (manga) => manga.tags)
-    @Exclude()
     manga: MangaEntity[];
 }
