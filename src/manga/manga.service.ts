@@ -20,7 +20,13 @@ export class MangaService {
     ) {}
 
     async findAll(): Promise<MangaEntity[]> {
-        return await this.mangaRepository.find();
+        return await this.mangaRepository.find({
+            select: {
+                cover: true,
+                title: true,
+                type: true
+            }
+        });
     }
 
     async findById(id: string): Promise<MangaEntity> {

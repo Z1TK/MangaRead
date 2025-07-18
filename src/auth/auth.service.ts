@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entity/user.entity';
 import { Repository } from 'typeorm';
@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'src/auth/interface/jwt.interface';
 import { LoginDto } from './dto/login.dto';
-import { Response } from 'express';
+import type { Response, Request } from 'express';
 import { isDev } from 'utils/is-dev.utils';
 import { timeToMilliseconds } from 'utils/time.utils';
 
@@ -106,6 +106,35 @@ export class AuthService {
         };
     }
 
+    async refresh(req: Request, res: Response) {
+        const refreshToken = req.cookies[
+            'refreshToken'
+        ];
+
+        if ( !refreshToken ) {
+            throw new UnauthorizedException('Invalid refresh token');
+        }
+
+        const payload: JwtPayload = await this.jwtService.verifyAsync(refreshToken);
+
+        if (payload) {
+            const user = await this.userRepository.findOne({
+                where: {
+                    id: payload.id
+                },
+                select: {
+                    id: true
+                }   
+            });
+
+            if (!user) {
+                throw new NotFoundException('User not founde');
+            }
+
+            return this.auth(res, user.id)
+        }
+    }
+
     private setCookie(res: Response, value: string, expires: Date) {
         res.cookie('refreshToken', value, {
             httpOnly: true,
@@ -114,5 +143,24 @@ export class AuthService {
             secure: !isDev(this.configService ),
             sameSite: isDev(this.configService)? 'none' : 'lax'
         })
+    }
+
+    async logout(res: Response) {
+        await this.setCookie(res, 'refreshToken', new Date(0))
+        return true;
+    }
+
+    async validate(id: string) {
+        const user = await this.userRepository.findOne({
+            where: {
+                id
+            }
+        })
+
+        if (!user) {
+            throw new NotFoundException();
+        }
+
+        return user;
     }
 }
