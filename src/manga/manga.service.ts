@@ -30,15 +30,21 @@ export class MangaService {
     }
 
     async findById(id: string): Promise<MangaEntity> {
-        const manga = await this.mangaRepository.findOne({
-            where: { id },
-            relations: {
-                author: true,
-                publisher: true,
-                genres: true,
-                tags: true
-            }
-        });
+        const manga = await this.mangaRepository.
+        createQueryBuilder('manga').
+        leftJoinAndSelect('manga.author', 'author').
+        leftJoinAndSelect('manga.publisher', 'publisher').
+        leftJoinAndSelect('manga.genres', 'genres').
+        leftJoinAndSelect('manga.tags', 'tags').
+        select([
+            'manga.id', 'manga.title',
+            'manga.description',
+            'manga.cover', 'author.id',
+            'author.name', 'publisher.id',
+            'publisher.name', 'genres.id',
+            'genres.name', 'tags.id',
+            'tags.name'
+        ]).where('manga.id = :id', { id }).getOne();
 
         if (!manga) {
             throw new NotFoundException();

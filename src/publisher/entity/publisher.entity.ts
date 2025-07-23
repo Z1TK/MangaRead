@@ -48,7 +48,7 @@ export class PublisherEntity {
     @OneToMany(() => MangaEntity, (manga) => manga.publisher, {
         cascade: true
     })
-    manga: MangaEntity;
+    manga: MangaEntity[];
 
     @CreateDateColumn({
         name: 'created_at'

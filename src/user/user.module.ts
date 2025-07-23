@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
+import { UserService } from './user.service';
+import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './entity/user.entity';
 import { JwtModule, JwtService } from '@nestjs/jwt';
@@ -19,7 +19,7 @@ import { JwtStrategy } from './strategy/jwt.stategy';
       inject: [ConfigService]
     })
   ],
-  controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  controllers: [UserController],
+  providers: [UserService, JwtStrategy],
 })
-export class AuthModule {}
+export class UserModule {}

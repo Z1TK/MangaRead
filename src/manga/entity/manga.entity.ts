@@ -17,6 +17,7 @@ import { PublisherEntity } from "src/publisher/entity/publisher.entity";
 import { GenreEntity } from "src/genre/entity/genre.entity";
 import { TagEntity } from "src/tag/entity/tag.entity";
 import slugify from "slugify";
+import { UserEntity } from "src/user/entity/user.entity";
 
 @Entity({name: 'manga'})
 export class MangaEntity {
@@ -65,6 +66,14 @@ export class MangaEntity {
     @ManyToOne(() => PublisherEntity, (publisher) => publisher.manga)
     @JoinColumn({name: 'publisher_id'})
     publisher: PublisherEntity;
+
+    @ManyToMany(() => UserEntity, (user) => user.manga)
+    @JoinTable({
+        name: 'user_manga',
+        joinColumn: {name: 'manga_id'},
+        inverseJoinColumn: {name: 'user_id'}
+    })
+    users: UserEntity[];
     
     @Column({
         type: 'enum',

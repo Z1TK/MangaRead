@@ -6,14 +6,14 @@ import { RegisterDto } from './dto/register.dto';
 import { hash, verify } from 'argon2';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from 'src/auth/interface/jwt.interface';
+import { JwtPayload } from 'src/user/interface/jwt.interface';
 import { LoginDto } from './dto/login.dto';
 import type { Response, Request } from 'express';
 import { isDev } from 'utils/is-dev.utils';
 import { timeToMilliseconds } from 'utils/time.utils';
 
 @Injectable()
-export class AuthService {
+export class UserService {
     private readonly JWT_ACCESS_TOKEN_TTL: string;
     private readonly JWT_REFRESH_TOKEN: string;
 

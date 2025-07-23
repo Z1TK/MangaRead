@@ -1,25 +1,24 @@
 import { Body, Controller, Get, Post, Req, Res, UseGuards} from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { Response, Request } from 'express';
-import { AuthGuard } from '@nestjs/passport';
 import { Authorization } from './decorator/auth.decorator';
 import { Authorized } from './decorator/authorized.decorator';
 import { UserEntity } from './entity/user.entity';
 
-@Controller('auth')
-export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+@Controller('user')
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
   @Post('register')
   async create(@Res({passthrough: true}) res: Response, @Body() dto: RegisterDto) {
-    return await this.authService.register(res, dto);
+    return await this.userService.register(res, dto);
   }
 
   @Post('login')
   async login(@Res({passthrough: true}) res: Response, @Body() dto: LoginDto) {
-    return await this.authService.login(res, dto);
+    return await this.userService.login(res, dto);
   }
 
   @Post('refresh')
@@ -27,12 +26,12 @@ export class AuthController {
     @Req() req: Request, 
     @Res({passthrough: true}) res: Response
   ) {
-    return await this.authService.refresh(req, res);
+    return await this.userService.refresh(req, res);
   }
 
   @Post('logout')
   async logout(@Res({passthrough: true}) res: Response) {
-    return await this.authService.logout(res);
+    return await this.userService.logout(res);
   }
   
   @Authorization()
