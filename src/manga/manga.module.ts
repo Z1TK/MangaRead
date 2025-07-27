@@ -11,22 +11,24 @@ import { TagService } from 'src/tag/tag.service';
 import { PublisherEntity } from 'src/publisher/entity/publisher.entity';
 import { GenreEntity } from 'src/genre/entity/genre.entity';
 import { TagEntity } from 'src/tag/entity/tag.entity';
+import { AuthorModule } from 'src/author/author.module';
+import { PublisherModule } from 'src/publisher/publisher.module';
+import { GenreModule } from 'src/genre/genre.module';
+import { TagModule } from 'src/tag/tag.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([
     MangaEntity,
-    AuthorEntity,
-    PublisherEntity,
-    GenreEntity,
-    TagEntity
-  ])],
+  ]),
+  AuthorModule,
+  PublisherModule,
+  GenreModule,
+  TagModule
+],
   controllers: [MangaController],
   providers: [
     MangaService,
-    AuthorService,
-    PublisherService,
-    GenreService,
-    TagService
   ],
+  exports: [MangaService]
 })
 export class MangaModule {}

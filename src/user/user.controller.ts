@@ -35,7 +35,7 @@ export class UserController {
   }
   
   @Authorization()
-  @Get('me')
+  @Get('profile')
   async me(@Authorized() user: UserEntity) {
     return user;
   }

@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { MangaService } from './manga.service';
 import { MangaDto } from './dto/manga.dto';
+import { Authorization } from 'src/user/decorator/auth.decorator';
 
 @Controller('manga')
 export class MangaController {
@@ -16,11 +17,13 @@ export class MangaController {
     return await this.mangaService.findById(id)
   }
 
+  @Authorization()
   @Post()
   async create(@Body() dto: MangaDto) {
     return await this.mangaService.create(dto);
   }
 
+  @Authorization()
   @Patch(":id")
   async update(@Param('id') id:string, @Body() dto:MangaDto) {
     return await this.mangaService.update(id, dto);

@@ -9,7 +9,8 @@ import {
     JoinTable, 
     JoinColumn, 
     BeforeInsert,
-    BeforeUpdate
+    BeforeUpdate,
+    OneToMany
 } from "typeorm";
 import { ReleaseFormat, StatusManga, TypeManga } from "../enum/manga.enum";
 import { AuthorEntity } from "src/author/entity/author.entity";
@@ -18,6 +19,7 @@ import { GenreEntity } from "src/genre/entity/genre.entity";
 import { TagEntity } from "src/tag/entity/tag.entity";
 import slugify from "slugify";
 import { UserEntity } from "src/user/entity/user.entity";
+import { CommentEntity } from "src/comment/entity/comment.entity";
 
 @Entity({name: 'manga'})
 export class MangaEntity {
@@ -115,6 +117,9 @@ export class MangaEntity {
         inverseJoinColumn: {name: 'tag_id'}
     })
     tags: TagEntity[];
+
+    @OneToMany(() => CommentEntity, (comment) => comment.manga)
+    comments: CommentEntity[];
 
     @CreateDateColumn({
         name: 'created_at'

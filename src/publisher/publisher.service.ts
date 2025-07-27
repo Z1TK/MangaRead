@@ -11,9 +11,9 @@ export class PublisherService {
         private publisherRepository: Repository<PublisherEntity>
     ) {}
 
-async findall(): Promise<PublisherEntity[]> {
-        return await this.publisherRepository.find();
-    }
+    async findall(): Promise<PublisherEntity[]> {
+            return await this.publisherRepository.find();
+        }
 
     async findById(id: string): Promise<PublisherEntity> {
         const author = await this.publisherRepository.findOne({

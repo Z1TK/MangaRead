@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { AuthorService } from './author.service';
 import { AuthorDto } from './dto/author.dto';
+import { Authorization } from 'src/user/decorator/auth.decorator';
 
 @Controller('authors')
 export class AuthorController {
@@ -16,11 +17,13 @@ export class AuthorController {
     return await this.authorService.findById(id);
   }
 
+  @Authorization()
   @Post()
   async create(@Body() dto: AuthorDto) {
     return await this.authorService.create(dto);
   }
 
+  @Authorization()
   @Put(':id')
   async update(@Param('id') id: string, @Body() dto: AuthorDto) {
     return await this.authorService.update(id, dto);
